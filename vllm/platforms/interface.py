@@ -373,6 +373,16 @@ class Platform:
                 or parallel_config.distributed_executor_backend
                 == "external_launcher")
 
+    @classmethod
+    def use_ray(cls) -> bool:
+        """
+        Whether to use ray for distribution 
+        """
+        from vllm.config import get_current_vllm_config
+
+        parallel_config = get_current_vllm_config().parallel_config
+        return parallel_config.distributed_executor_backend == "ray"
+
 
 class UnspecifiedPlatform(Platform):
     _enum = PlatformEnum.UNSPECIFIED
